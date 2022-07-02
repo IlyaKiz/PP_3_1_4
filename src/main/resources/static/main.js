@@ -109,7 +109,7 @@ const getTitle = async () => {
         h.style.color = 'white';
 
         let temp = '';
-        temp += data.email + ' with roles: ' + data.roles.map(r => r.name).join(" ");
+        temp += data.username + ' with roles: ' + data.roles.map(r => r.role).join(" ");
         h.innerText = temp;
         fragment.appendChild(h);
         nav.appendChild(fragment);
@@ -122,8 +122,8 @@ async function checkRole() {
     await findAuthUser().then(res => res.json()).then(async data => {
         let role = '';
         for (let i = 0; i < data.roles.length; i++) {
-            role = data.roles[i].name;
-            if (role === 'ROLE_ADMIN') {
+            role = data.roles[i].role;
+            if (role === 'ADMIN') {
                 isAdmin = true;
             }
         }
@@ -145,11 +145,10 @@ const getUserTable = async () => {
                     <tr>
                         <td>${user.id}</td>
                         <td>${user.firstname}</td>
-                        <td>${user.lastname}</td>                        
+                        <td>${user.lastname}</td>                       
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.password}</td>
-                        <td>${user.roles.map(r => r.name).join(" ")}</td>
+                        <td>${user.roles.map(r => r.role).join(" ")}</td>
                         <td>
                 </tr>
                     `;
@@ -171,10 +170,11 @@ async function addUser() {
     }
 
     let user = {
-        firstname: document.querySelector('#firstNameNew').value,
-        lastname: document.querySelector('#lastNameNew').value,
+        firstName: document.querySelector('#firstNameNew').value,
+        lastName: document.querySelector('#lastNameNew').value,
+        age: document.querySelector('#ageNew').value,
         email: document.querySelector('#emailNew').value,
-        username: document.querySelector('#userNameNew').value,
+        phoneNumber: document.querySelector('#phoneNumberNew').value,
         password: document.querySelector('#passwordNew').value,
         roles: array
     }
@@ -224,8 +224,7 @@ async function getAllUser() {
                         <td>${user.lastname}</td>                        
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        
-                        <td>${user.roles.map(r => r.name).join(" ")}</td>
+                        <td>${user.roles.map(r => r.role).join(" ")}</td>
                         
                         <td>
                             <button id="edit" type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
@@ -301,30 +300,32 @@ async function editUser(modal, id) {
                </div>
                    
                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="firstname" class="col-form-label">FirstName</label>
-                    <input type="text" class="form-control" id="firstname" value="${user.firstname}">
+                    <label for="firstName" class="col-form-label">FirstName</label>
+                    <input type="text" class="form-control" id="firstName" value="${user.firstname}">
                </div>
 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="lastname" class="com-form-label">LastName</label>
-                    <input type="text" class="form-control" id="lastname" value="${user.lastname}">
+                    <label for="lastName" class="com-form-label">LastName</label>
+                    <input type="text" class="form-control" id="lastName" value="${user.lastname}">
                 </div>
-               
+
+                
+
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="email" class="com-form-label">Email</label>
                     <input type="text" class="form-control" id="email" value="${user.email}">
                 </div>
                 
-                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="username" class="com-form-label">Age</label>
-                    <input type="number" class="form-control" id="username" value="${user.username}">
+                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
+                    <label for="username" class="com-form-label">Username</label>
+                    <input type="text" class="form-control" id="password" value="${user.username}">
                 </div>
                 
-                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="password" class="com-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" value="${user.password}">
+                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
+                    <label for="phoneNamber" class="com-form-label">Phone number</label>
+                    <input type="tel" class="form-control" id="phoneNamber" value="${user.phoneNumber}">
                 </div>
-                               
+                
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                         <label for="roles" class="form-label">Role: </label>
                         <select class="form-select form-select-sm" aria-label="Small select" name="select"
@@ -341,10 +342,11 @@ async function editUser(modal, id) {
 
     $("#editButton").on('click', async () => {
         let id = modal.find("#id").val();
-        let firstname = modal.find('#firstname').val().trim();
-        let lastname = modal.find('#lastname').val().trim();
+        let firstName = modal.find('#firstName').val().trim();
+        let lastName = modal.find('#lastName').val().trim();
+        let age = modal.find("#age").val().trim();
         let email = modal.find("#email").val().trim();
-        let username = modal.find('#username').val().trim();
+        let phoneNumber = modal.find('#phoneNamber').val().trim();
         let password = modal.find("#password").val().trim();
 
         const role = document.querySelector('#roles').options;
@@ -358,8 +360,8 @@ async function editUser(modal, id) {
 
         let user = {
             id: id,
-            firstname: firstname,
-            lastname: lastname,
+            firstname: firstName,
+            lastname: lastName,
             email: email,
             username: username,
             password: password,
@@ -406,23 +408,28 @@ async function deleteUser(modal, id) {
                </div>
                    
                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="firstname" class="col-form-label">FirstName</label>
-                    <input type="text" class="form-control" id="firstname" value="${user.firstname}" disabled>
+                    <label for="firstName" class="col-form-label">FirstName</label>
+                    <input type="text" class="form-control" id="firstName" value="${user.firstName}" disabled>
                </div>
 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="lastname" class="com-form-label">LastName</label>
-                    <input type="text" class="form-control" id="lastname" value="${user.lastname}" disabled>
+                    <label for="lastName" class="com-form-label">LastName</label>
+                    <input type="text" class="form-control" id="lastName" value="${user.lastName}" disabled>
                 </div>
-               
+
+                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
+                    <label for="age" class="com-form-label">Age</label> 
+                    <input type="number" class="form-control" id="age" value="${user.age}" disabled>
+                </div>
+
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="email" class="com-form-label">Email</label>
                     <input type="text" class="form-control" id="email" value="${user.email}" disabled>
                 </div>
                                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="username" class="com-form-label">Phone number</label>
-                    <input type="tel" class="form-control" id="username" value="${user.username}" disabled>
+                    <label for="phoneNamber" class="com-form-label">Phone number</label>
+                    <input type="tel" class="form-control" id="phoneNamber" value="${user.phoneNumber}" disabled>
                 </div>
                 
                  <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">

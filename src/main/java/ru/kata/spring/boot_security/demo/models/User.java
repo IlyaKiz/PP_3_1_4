@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import groovyjarjarantlr4.v4.runtime.misc.Array2DHashSet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,29 +40,28 @@ public class User implements UserDetails {
       return username;
    }
 
-
-
-   @ManyToMany(fetch = FetchType.EAGER)
+   @ManyToMany
    @JoinTable(name = "users_roles",
-           joinColumns = {@JoinColumn(name = "user_id")},
-           inverseJoinColumns = @JoinColumn(name = "role_id"))
+           joinColumns = {@JoinColumn(name = "USER_ID")},
+           inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
    private Set<Role> roles;
+
+
 
    public void setPassword(String password) {
       this.password = password;
    }
 
-   public Set<Role> getRoles() {
-      return roles;
+   public User(String firstname, String lastname, String email, String username, String password) {
+      this.firstname = firstname;
+      this.lastname = lastname;
+      this.email = email;
+      this.username = username;
+      this.password = password;
    }
 
-   public List<String> getListRoles() {
-      List<String> getListRoles = new ArrayList<>();
-      for (Role e : roles) {
-         getListRoles.add(e.getRole().substring(5));
-      }
-      return getListRoles;
-   }
+
+
 
    @Override
    public boolean isAccountNonExpired() {
@@ -85,7 +85,7 @@ public class User implements UserDetails {
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return getRoles();
+      return roles;
    }
 
 }
