@@ -109,7 +109,7 @@ const getTitle = async () => {
         h.style.color = 'white';
 
         let temp = '';
-        temp += data.username + ' with roles: ' + data.roles.map(r => r.role).join(" ");
+        temp += data.email + ' with roles: ' + data.roles.map(r => r.role).join(" ");
         h.innerText = temp;
         fragment.appendChild(h);
         nav.appendChild(fragment);
@@ -123,7 +123,7 @@ async function checkRole() {
         let role = '';
         for (let i = 0; i < data.roles.length; i++) {
             role = data.roles[i].role;
-            if (role === 'ADMIN') {
+            if (role === 'ROLE_ADMIN') {
                 isAdmin = true;
             }
         }
@@ -165,16 +165,15 @@ async function addUser() {
     let array = []
     for (let i = 0; i < role.length; i++) {
         if (role[i].selected) {
-            array.push({name: role[i].text})
+            array.push({role: role[i].text})
         }
     }
 
     let user = {
-        firstName: document.querySelector('#firstNameNew').value,
-        lastName: document.querySelector('#lastNameNew').value,
-        age: document.querySelector('#ageNew').value,
+        firstname: document.querySelector('#firstnameNew').value,
+        lastname: document.querySelector('#lastnameNew').value,
         email: document.querySelector('#emailNew').value,
-        phoneNumber: document.querySelector('#phoneNumberNew').value,
+        username: document.querySelector('#usernameNew').value,
         password: document.querySelector('#passwordNew').value,
         roles: array
     }
@@ -224,8 +223,7 @@ async function getAllUser() {
                         <td>${user.lastname}</td>                        
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(r => r.role).join(" ")}</td>
-                        
+                        <td>${user.roles.map(r => r.role).join(" ")}</td>                        
                         <td>
                             <button id="edit" type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
                              data-toggle="modal" data-target="#exampleModalEdit">Edit</button>  <!--className-->
@@ -300,13 +298,13 @@ async function editUser(modal, id) {
                </div>
                    
                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="firstName" class="col-form-label">FirstName</label>
-                    <input type="text" class="form-control" id="firstName" value="${user.firstname}">
+                    <label for="firstname" class="col-form-label">FirstName</label>
+                    <input type="text" class="form-control" id="firstname" value="${user.firstname}">
                </div>
 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="lastName" class="com-form-label">LastName</label>
-                    <input type="text" class="form-control" id="lastName" value="${user.lastname}">
+                    <label for="lastname" class="com-form-label">LastName</label>
+                    <input type="text" class="form-control" id="lastname" value="${user.lastname}">
                 </div>
 
                 
@@ -318,17 +316,17 @@ async function editUser(modal, id) {
                 
                  <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="username" class="com-form-label">Username</label>
-                    <input type="text" class="form-control" id="password" value="${user.username}">
+                    <input type="text" class="form-control" id="username" value="${user.username}">
                 </div>
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="phoneNamber" class="com-form-label">Phone number</label>
-                    <input type="tel" class="form-control" id="phoneNamber" value="${user.phoneNumber}">
+                    <label for="password" class="com-form-label">Password</label>
+                    <input type="password" class="form-control" id="password" value="${user.password}">
                 </div>
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                         <label for="roles" class="form-label">Role: </label>
-                        <select class="form-select form-select-sm" aria-label="Small select" name="select"
+                        <select class="form-select form-select-sm" aria-label="Small select" role="select"
                                 id="roles" size="2"
                                 multiple required>
                             <option selected="selected" value="2" text="USER">USER</option>
@@ -342,11 +340,10 @@ async function editUser(modal, id) {
 
     $("#editButton").on('click', async () => {
         let id = modal.find("#id").val();
-        let firstName = modal.find('#firstName').val().trim();
-        let lastName = modal.find('#lastName').val().trim();
-        let age = modal.find("#age").val().trim();
+        let firstname = modal.find('#firstname').val().trim();
+        let lastname = modal.find('#lastname').val().trim();
         let email = modal.find("#email").val().trim();
-        let phoneNumber = modal.find('#phoneNamber').val().trim();
+        let username = modal.find('#username').val().trim();
         let password = modal.find("#password").val().trim();
 
         const role = document.querySelector('#roles').options;
@@ -354,14 +351,14 @@ async function editUser(modal, id) {
         let array = []
         for (let i = 0; i < role.length; i++) {
             if (role[i].selected) {
-                array.push({name: role[i].getAttribute('text')})
+                array.push({role: role[i].getAttribute('text')})
             }
         }
 
         let user = {
             id: id,
-            firstname: firstName,
-            lastname: lastName,
+            firstname: firstname,
+            lastname: lastname,
             email: email,
             username: username,
             password: password,
@@ -408,28 +405,23 @@ async function deleteUser(modal, id) {
                </div>
                    
                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="firstName" class="col-form-label">FirstName</label>
-                    <input type="text" class="form-control" id="firstName" value="${user.firstName}" disabled>
+                    <label for="firstname" class="col-form-label">FirstName</label>
+                    <input type="text" class="form-control" id="firstname" value="${user.firstname}" disabled>
                </div>
 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="lastName" class="com-form-label">LastName</label>
-                    <input type="text" class="form-control" id="lastName" value="${user.lastName}" disabled>
+                    <label for="lastname" class="com-form-label">LastName</label>
+                    <input type="text" class="form-control" id="lastname" value="${user.lastname}" disabled>
                 </div>
-
-                <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="age" class="com-form-label">Age</label> 
-                    <input type="number" class="form-control" id="age" value="${user.age}" disabled>
-                </div>
-
+               
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="email" class="com-form-label">Email</label>
                     <input type="text" class="form-control" id="email" value="${user.email}" disabled>
                 </div>
                                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
-                    <label for="phoneNamber" class="com-form-label">Phone number</label>
-                    <input type="tel" class="form-control" id="phoneNamber" value="${user.phoneNumber}" disabled>
+                    <label for="username" class="com-form-label">Username</label>
+                    <input type="tel" class="form-control" id="username" value="${user.username}" disabled>
                 </div>
                 
                  <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
@@ -439,7 +431,7 @@ async function deleteUser(modal, id) {
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                         <label for="rolesNew" class="form-label">Role: </label>
-                        <select class="form-select form-select-sm" aria-label="Small select" name="select"
+                        <select class="form-select form-select-sm" aria-label="Small select" role="select"
                                 id="rolesNew" size="2"
                                 multiple disabled>
                             <option selected="selected" value="2" text="USER">USER</option>

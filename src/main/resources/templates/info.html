@@ -66,16 +66,12 @@
                 </div>
                 <form class="addForm bg-white border" method="POST">
                     <div class="col-lg-3 align-items-center text-center mx-auto">
-                        <label class="form-label" for="firstNameNew">First name: </label>
-                        <input type="text" class="form-control" id="firstNameNew" required>
+                        <label class="form-label" for="firstnameNew">First name: </label>
+                        <input type="text" class="form-control" id="firstnameNew" required>
                     </div>
                     <div class="col-lg-3 align-items-center text-center mx-auto">
-                        <label class="form-label" for="lastNameNew">Last name: </label>
-                        <input type="text" class="form-control" id="lastNameNew" required>
-                    </div>
-                    <div class="col-lg-3 align-items-center text-center mx-auto">
-                        <label class="form-label" for="ageNew">Age: </label>
-                        <input type="number" class="form-control" id="ageNew" required>
+                        <label class="form-label" for="lastnameNew">Last name: </label>
+                        <input type="text" class="form-control" id="lastnameNew" required>
                     </div>
                     <div class="col-lg-3 align-items-center text-center mx-auto">
                         <label class="form-label" for="emailNew">Email: </label>
@@ -83,9 +79,9 @@
                                placeholder="name@example.com" required>
                     </div>
                     <div class="col-lg-3 align-items-center text-center mx-auto">
-                        <label class="form-label" for="phoneNumberNew">Phone: </label>
+                        <label class="form-label" for="usernameNew">Username: </label>
                         <input type="text"
-                               class="form-control" id="phoneNumberNew" required>
+                               class="form-control" id="usernameNew" required>
                     </div>
                     <div class="col-lg-3 align-items-center text-center mx-auto">
                         <label class="form-label" for="passwordNew">Password: </label>
@@ -94,7 +90,7 @@
                     </div>
                     <div class="col-lg-3 align-items-center text-center mx-auto">
                         <label for="rolesNew" class="form-label">Role: </label>
-                        <select class="form-select form-select-sm" aria-label="Small select" name="select"
+                        <select class="form-select form-select-sm" aria-label="Small select" role="select"
                                 id="rolesNew" size="2"
                                 multiple required>
                             <option selected="selected" value="2" text="USER">USER</option>
@@ -149,9 +145,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">First name</th>
                         <th scope="col">Last name</th>
-                        <th scope="col">Age</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">Username</th>
                         <th scope="col">Role</th>
                     </tr>
                     </thead>

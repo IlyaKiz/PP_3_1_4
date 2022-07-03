@@ -40,7 +40,7 @@ public class User implements UserDetails {
       return username;
    }
 
-   @ManyToMany
+   @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
    @JoinTable(name = "users_roles",
            joinColumns = {@JoinColumn(name = "USER_ID")},
            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID")})
@@ -60,7 +60,13 @@ public class User implements UserDetails {
       this.password = password;
    }
 
-
+   public List<String> getListRoles() {
+      List<String> getListRoles = new ArrayList<>();
+      for (Role e : roles) {
+         getListRoles.add(e.getRole().substring(5));
+      }
+      return getListRoles;
+   }
 
 
    @Override

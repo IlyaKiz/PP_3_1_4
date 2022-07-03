@@ -47,12 +47,26 @@ public class AdminController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @DeleteMapping("/admin/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable long id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity<>("", HttpStatus.OK);
+    }
     @PutMapping("/admin/{id}")
     private ResponseEntity<String> updateUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return new ResponseEntity<>("", HttpStatus.OK);
     }
+
+    @PostMapping("/admin")
+    private ResponseEntity<List<User>> createUser(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.saveUser(user);
+        return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
+
+    }
+
 
 
 
