@@ -32,7 +32,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin")
-    public ResponseEntity<List<User>> showAllUsers() {
+    public ResponseEntity<Set<User>> showAllUsers() {
         return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
     }
 
@@ -50,20 +50,20 @@ public class AdminController {
     @DeleteMapping("/admin/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable long id) {
         userService.deleteUserById(id);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     @PutMapping("/admin/{id}")
     private ResponseEntity<String> updateUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
-        return new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/admin")
-    private ResponseEntity<List<User>> createUser(@RequestBody User user) {
+    private ResponseEntity<String> createUser(@RequestBody User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
-        return new ResponseEntity<>(userService.listUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 

@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserRepository;
 import ru.kata.spring.boot_security.demo.models.User;
 
-import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -25,14 +25,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<User> listUsers() {
-        return userRepository.findAll();
+    public Set<User> listUsers() {
+        return userRepository.getAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public User getUserById(long id) {
-        return userRepository.findById(id).get();
+        return userRepository.getUserById(id);
     }
 
     @Override

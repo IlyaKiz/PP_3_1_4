@@ -109,7 +109,7 @@ const getTitle = async () => {
         h.style.color = 'white';
 
         let temp = '';
-        temp += data.email + ' with roles: ' + data.roles.map(r => r.role).join(" ");
+        temp += data.email + ' with roles: ' + data.roles.map(r => r.role).join(", ");
         h.innerText = temp;
         fragment.appendChild(h);
         nav.appendChild(fragment);
@@ -165,7 +165,7 @@ async function addUser() {
     let array = []
     for (let i = 0; i < role.length; i++) {
         if (role[i].selected) {
-            array.push({role: role[i].text})
+            array.push({role: role[i].getAttribute('text')})
         }
     }
 
@@ -223,7 +223,7 @@ async function getAllUser() {
                         <td>${user.lastname}</td>                        
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(r => r.role).join(" ")}</td>                        
+                        <td>${user.roles.map(r => r.role).join(", ")}</td>                        
                         <td>
                             <button id="edit" type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
                              data-toggle="modal" data-target="#exampleModalEdit">Edit</button>  <!--className-->
@@ -321,16 +321,16 @@ async function editUser(modal, id) {
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="password" class="com-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" value="${user.password}">
+                    <input type="password" class="form-control" id="password" value="">
                 </div>
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                         <label for="roles" class="form-label">Role: </label>
-                        <select class="form-select form-select-sm" aria-label="Small select" role="select"
+                        <select class="form-select form-select-sm" aria-label="Small select" name="select"
                                 id="roles" size="2"
                                 multiple required>
-                            <option selected="selected" value="2" text="USER">USER</option>
-                            <option value="1" text="ADMIN">ADMIN</option>
+                            <option selected="selected" value="2" text="ROLE_USER">USER</option>
+                            <option value="1" text="ROLE_ADMIN">ADMIN</option>
                         </select>
                     </div>
             </form>
@@ -426,16 +426,16 @@ async function deleteUser(modal, id) {
                 
                  <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                     <label for="password" class="com-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" value="${user.password}" disabled>
+                    <input type="password" class="form-control" id="password" value="" disabled>
                 </div>
                 
                 <div class="form-group mb-3 col-md-6 align-items-center text-center mx-auto">
                         <label for="rolesNew" class="form-label">Role: </label>
-                        <select class="form-select form-select-sm" aria-label="Small select" role="select"
+                        <select class="form-select form-select-sm" aria-label="Small select" name="select"
                                 id="rolesNew" size="2"
                                 multiple disabled>
-                            <option selected="selected" value="2" text="USER">USER</option>
-                            <option value="1" text="ADMIN">ADMIN</option>
+                            <option selected="selected" value="2" text="ROLE_USER">USER</option>
+                            <option value="1" text="ROLE_ADMIN">ADMIN</option>
                         </select>
                     </div>
             </form>

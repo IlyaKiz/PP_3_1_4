@@ -6,9 +6,8 @@ DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles` (
                          `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
                          `role` varchar(250) DEFAULT NULL,
-                         PRIMARY KEY (`id`),
-                         UNIQUE KEY `id` (`id`),
-                         UNIQUE KEY `role` (`role`)
+                         PRIMARY KEY (`id`)
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
