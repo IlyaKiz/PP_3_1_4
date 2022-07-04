@@ -148,7 +148,7 @@ const getUserTable = async () => {
                         <td>${user.lastname}</td>                       
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(r => r.role).join(" ")}</td>
+                        <td>${user.roles.map(r => r.role).join(", ")}</td>
                         <td>
                 </tr>
                     `;

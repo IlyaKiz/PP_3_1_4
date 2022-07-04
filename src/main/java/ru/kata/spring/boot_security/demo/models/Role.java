@@ -26,7 +26,6 @@ public class Role implements GrantedAuthority {
     private String role;
 
     @Transient
-    @JsonIgnore
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
 
@@ -34,6 +33,5 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return role;
     }
-
 
 }
