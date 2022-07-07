@@ -109,7 +109,7 @@ const getTitle = async () => {
         h.style.color = 'white';
 
         let temp = '';
-        temp += data.email + ' with roles: ' + data.roles.map(r => r.role).join(", ");
+        temp += data.email + ' with roles: ' + data.roles.map(r => r.role.slice(5)).join(", ");
         h.innerText = temp;
         fragment.appendChild(h);
         nav.appendChild(fragment);
@@ -148,7 +148,7 @@ const getUserTable = async () => {
                         <td>${user.lastname}</td>                       
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(r => r.role).join(", ")}</td>
+                        <td>${user.roles.map(r => r.role.slice(5)).join(", ")}</td>
                         <td>
                 </tr>
                     `;
@@ -223,7 +223,7 @@ async function getAllUser() {
                         <td>${user.lastname}</td>                        
                         <td>${user.email}</td>
                         <td>${user.username}</td>
-                        <td>${user.roles.map(r => r.role).join(", ")}</td>                        
+                        <td>${user.roles.map(r => r.role.slice(5)).join(", ")}</td>                        
                         <td>
                             <button id="edit" type="button" data-userid="${user.id}" data-action="edit" class="btn btn-info"
                              data-toggle="modal" data-target="#exampleModalEdit">Edit</button>  <!--className-->
